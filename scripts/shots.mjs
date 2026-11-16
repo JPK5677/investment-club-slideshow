@@ -14,6 +14,9 @@ for (const [w,h] of sizes) {
   await page.goto(url)
   for (let i = 0; i < 8; i++) {
     await page.waitForTimeout(i === 0 ? 3500 : 3800)
+    // Wait until the SplitText heading finishes (all words opaque, no offset), up to 15s. Software GL can stall GSAP.
+    await page.waitForFunction(() => [...document.querySelectorAll('.split-word')].every(w => getComputedStyle(w).opacity === '1' && /^(none|matrix\(1, 0, 0, 1, 0, 0\))$/.test(getComputedStyle(w).transform)), null, { timeout: 15000 }).catch(() => console.log(w, h, 'slide', i+1, 'WARN heading still animating'))
+    await page.waitForTimeout(500)
     await page.screenshot({ path: `${out}/${w}x${h}-slide${i+1}.png` })
     const clip = await page.evaluate(() => { const s=document.querySelector('section'); return s ? s.scrollHeight - s.clientHeight : -1 })
     console.log(w, h, 'slide', i+1, 'overflowPx', clip)

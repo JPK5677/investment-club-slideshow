@@ -438,7 +438,7 @@ const SplitText = ({
 
   const Tag = tag || 'p';
   const clip =
-    hoverEffect === 'none' && (from !== undefined || to !== undefined || effect === 'rise' || effect === 'fade');
+    mask && hoverEffect === 'none';
 
   return (
     <Tag
