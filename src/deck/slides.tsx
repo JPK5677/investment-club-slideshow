@@ -1,8 +1,6 @@
-﻿import { lazy, Suspense, type ReactNode } from 'react'
+﻿import type { ReactNode } from 'react'
 import TiltedCard from '@/components/TiltedCard'
 import { bodySize, Eyebrow, Heading, Rise, Slide, Stagger } from '@/deck/Slide'
-
-const HeroScene = lazy(() => import('@/scenes/HeroScene'))
 
 export type SlideDef = { label: string; notes: string; render: (reduce: boolean) => ReactNode }
 
@@ -53,22 +51,15 @@ export const slides: SlideDef[] = [
     notes: 'Welcome everyone. This is not a lecture. In the next few minutes I will ask four questions and we will talk through each one. Your answers shape the club.',
     render: reduce => (
       <Slide>
-        <div className="grid items-center gap-[clamp(0.5rem,3vh,2rem)] lg:grid-cols-[1.1fr_1fr]">
-          <div className="flex flex-col gap-[clamp(1rem,4vh,2.5rem)]">
-            <Eyebrow>Interest meeting</Eyebrow>
-            <Heading as="h1" reduce={reduce}>Investment Club</Heading>
-            <Stagger reduce={reduce} delay={0.9}>
-              <Rise reduce={reduce}>
-                <div className="mb-[clamp(0.75rem,3vh,1.5rem)] h-1 w-24 bg-gold" />
-                <p className={`${bodySize} ${muted} max-w-xl`}>Help us decide how our club runs.</p>
-              </Rise>
-            </Stagger>
-          </div>
-          <div className="h-[clamp(11rem,34vh,26rem)] lg:h-[min(60vh,32rem)]">
-            <Suspense fallback={null}>
-              <HeroScene still={reduce} />
-            </Suspense>
-          </div>
+        <div className="flex flex-col gap-[clamp(1rem,4vh,2.5rem)]">
+          <Eyebrow>Interest meeting</Eyebrow>
+          <h1 className="text-[clamp(3.5rem,min(16vh,13vw),10rem)] leading-[0.95]">Investment Club</h1>
+          <Stagger reduce={reduce} delay={0.5}>
+            <Rise reduce={reduce}>
+              <div className="mb-[clamp(0.75rem,3vh,1.5rem)] h-1 w-24 bg-gold" />
+              <p className={`${bodySize} ${muted} max-w-xl`}>Help us decide how our club runs.</p>
+            </Rise>
+          </Stagger>
         </div>
       </Slide>
     ),
@@ -224,6 +215,7 @@ export const slides: SlideDef[] = [
     ),
   },
 ]
+
 
 
 

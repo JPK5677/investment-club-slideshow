@@ -1,7 +1,7 @@
 ﻿import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import Aurora from '@/components/Aurora'
+import { backgrounds, staticBackground } from '@/deck/Backgrounds'
 import { slides } from '@/deck/slides'
 import { usePrefersReducedMotion } from '@/deck/usePrefersReducedMotion'
 
@@ -69,12 +69,16 @@ export default function App() {
 
   return (
     <div className="flex h-dvh w-screen flex-col overflow-hidden bg-green text-cream">
-      {!reduce && (
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-[55vh] opacity-45" aria-hidden>
-          <Aurora colorStops={['#0F3D2E', '#C9A227', '#1F7A5A']} amplitude={0.7} blend={0.6} speed={0.4} />
-        </div>
-      )}
-
+      <div className="pointer-events-none absolute inset-0" aria-hidden style={reduce ? { background: staticBackground } : undefined}>
+        {!reduce && (
+          <AnimatePresence initial={false}>
+            <motion.div key={index} className="absolute inset-0" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.9, ease: 'easeInOut' }}>
+              {backgrounds[index](1)}
+            </motion.div>
+          </AnimatePresence>
+        )}
+        <div className="absolute inset-0 bg-green-deep/70" />
+      </div>
       <main className="relative min-h-0 flex-1" onPointerDown={onPointerDown} onPointerUp={onPointerUp} onClick={onClick}>
         <AnimatePresence initial={false} custom={x}>
           <motion.div
@@ -128,3 +132,5 @@ export default function App() {
     </div>
   )
 }
+
+

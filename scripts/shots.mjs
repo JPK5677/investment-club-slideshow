@@ -13,7 +13,7 @@ for (const [w,h] of sizes) {
   page.on('request', r => { if (!r.url().startsWith('file:') && !r.url().startsWith('data:')) reqs.push(r.url()) })
   await page.goto(url)
   for (let i = 0; i < 8; i++) {
-    await page.waitForTimeout(i === 0 ? 3500 : 2200)
+    await page.waitForTimeout(i === 0 ? 3500 : 3800)
     await page.screenshot({ path: `${out}/${w}x${h}-slide${i+1}.png` })
     const clip = await page.evaluate(() => { const s=document.querySelector('section'); return s ? s.scrollHeight - s.clientHeight : -1 })
     console.log(w, h, 'slide', i+1, 'overflowPx', clip)
@@ -24,3 +24,4 @@ for (const [w,h] of sizes) {
   await page.close()
 }
 await browser.close()
+
